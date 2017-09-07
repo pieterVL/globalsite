@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Forum</title>
+</head>
+<body>
+	<a href=".">Home</a>
+	<h1>{{topic}}</h1>
+
+	<form action="./delete/{{topic}}" method="post">
+		{% csrf_token %}
+		<input type="submit" value="delete">
+	</form>
+
+	<hr>
+	<table>
+		{% for p in posts %}
+			<tr>
+				<td>{{p}}</td>
+				<td>
+					<form action="./delete_post/{{topic}}" method="post">
+						{% csrf_token %}
+						<!-- {{ forloop.counter }} -->
+						<input type="hidden" name="key" value="{{ p }}">
+						<input type="submit" value="X">
+					</form>
+				</td>
+			</tr>
+		{% endfor%}
+	</table>
+
+	<p>Nieuwe post</p>
+	<form action="./{{topic}}" method="post">		
+		{% csrf_token %}
+		<textarea rows="4" cols="50"  name="post"></textarea>
+		<input type="submit" name="submit" value="post">	
+	</form>
+</body>
+</html>
