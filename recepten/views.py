@@ -8,22 +8,37 @@ client = MongoClient()
 # db = client['primer']
 # coll = db['dataset']
 db = client['Recepten']
-coll = db['test']
+
 # Create your views here.
 def index(request):
-	vari =  insert(0)
-	print vari
-	print vari.inserted_id
-	return render(request, 'forum/index.html', {'recepten':None})
+	if request.method == 'GET':
+		cursor = getAll()
+		return render(request, 'forum/index.html', {'recepten':cursor})
+	elif request.method == 'POST':
 
-	# if request.method == 'GET':
-	# 	return render(request, 'forum/index.html', {'topics':getTopics()})
-	# elif request.method == 'POST':
-	# 	subject = request.POST['subject']; 
-	# 	addTopic(subject)
-	# 	addPost(subject, request.POST['post'])
-	# 	return redirect('.')
+		if not exists(request.POST['naam']):
+		# if True:
+			insert({
+				'naam':	request.POST['naam'],
+				'calorien':	request.POST['calorien'],
+				'ingredienten':	request.POST['ingredienten'],
+				'tijd':	request.POST['tijd'],
+			})
 
+		return redirect("./")
+
+def getAll():
+	return db['res'].find()
+
+def exists(name):
+	print name
+	cursor = getAll()
+	for r in cursor:
+		if r['naam'] == name:
+			return True
+	return False
+	
 def insert(obj):
-	result = db['test'].insert_one({'key':'value'})
+	# result = db['test'].insert_one({'key':'value'})
+	result = db['res'].insert_one(obj)
 	return result

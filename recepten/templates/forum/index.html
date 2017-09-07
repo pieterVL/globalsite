@@ -8,20 +8,23 @@
 	<h1>My Recepten</h1><hr>
 	<h2>Recepten:</h2>
 	
-	{% if recepten %}
-		<ul>
+	{% if recepten is not None %}
+		<ol>
     	{% for r in recepten %}
     		<li>
-    			{{r}}
+    			naam: {{r.naam}}
+    			calorien: {{r.calorien}}
+    			ingredienten: {{r.ingredienten}}
+    			tijd: {{r.tijd}}    			
     		</li>
     	{% endfor%}
-    	</ul>
+    	</ol>
     {% else %}
     	<p>There are no Recepten yet.</p>
 	{% endif %}
 	
 	<h3>New recept</h3>
-	<form action="./" method="post">		
+	<form action="./" method="post">	
 		{% csrf_token %}
 		naam:<input type="text" name="naam"><br>
 		calorien:<input type="text" name="calorien"><br>
