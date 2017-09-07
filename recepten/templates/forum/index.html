@@ -5,24 +5,29 @@
 	<title>Forum</title>
 </head>
 <body>
-	<h1>My Forum</h1>
-	<h2>Forum topics</h2>
+	<h1>My Recepten</h1><hr>
+	<h2>Recepten:</h2>
 	
-	{% if topics %}
+	{% if recepten %}
 		<ul>
-    	{% for t in topics %}
-    		<li><a href="./{{t}}">{{t}}</a></li>
+    	{% for r in recepten %}
+    		<li>
+    			{{r}}
+    		</li>
     	{% endfor%}
     	</ul>
     {% else %}
-    	<p>There are no topic yet.</p>
+    	<p>There are no Recepten yet.</p>
 	{% endif %}
 	
-	<h3>New Topic</h3>
+	<h3>New recept</h3>
 	<form action="./" method="post">		
 		{% csrf_token %}
-		Subject:<input type="text" name="subject"><br>
-		Content:<textarea rows="4" cols="50"  name="post"></textarea><br>
+		naam:<input type="text" name="naam"><br>
+		calorien:<input type="text" name="calorien"><br>
+		ingredienten:<input type="text" name="ingredienten"><br>
+		tijd:<input type="text" name="tijd"><br>
+		
 		<input type="submit" name="submit" value="post">	
 	</form>
 </body>

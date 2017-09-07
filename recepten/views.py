@@ -14,7 +14,7 @@ def index(request):
 	vari =  insert(0)
 	print vari
 	print vari.inserted_id
-	return HttpResponse("<h2>Hey</h2>")
+	return render(request, 'forum/index.html', {'recepten':None})
 
 	# if request.method == 'GET':
 	# 	return render(request, 'forum/index.html', {'topics':getTopics()})
