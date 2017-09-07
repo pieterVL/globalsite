@@ -13,31 +13,31 @@ db = client['Recepten']
 def index(request):
 	if request.method == 'GET':
 		cursor = getAll()
+		cursor.sort('calorien')
+		cursor.sort('naam')
 		return render(request, 'forum/index.html', {'recepten':cursor})
 	elif request.method == 'POST':
-
-		if not exists(request.POST['naam']):
-		# if True:
-			insert({
+		obj = {
 				'naam':	request.POST['naam'],
 				'calorien':	request.POST['calorien'],
 				'ingredienten':	request.POST['ingredienten'],
 				'tijd':	request.POST['tijd'],
-			})
+			}
+		if not exists(obj):
+			insert(obj)
 
 		return redirect("./")
 
 def getAll():
 	return db['res'].find()
 
-def exists(name):
-	print name
+def exists(obj):
 	cursor = getAll()
 	for r in cursor:
-		if r['naam'] == name:
+		if r['naam'] == obj['naam'] and r['calorien'] == obj['calorien'] and r['ingredienten'] == obj['ingredienten'] and r['tijd'] == obj['tijd']:
 			return True
 	return False
-	
+
 def insert(obj):
 	# result = db['test'].insert_one({'key':'value'})
 	result = db['res'].insert_one(obj)
